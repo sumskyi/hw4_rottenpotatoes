@@ -20,6 +20,11 @@ group :production do
   gem 'pg'
 end
 
+group :development do
+  gem 'guard-cucumber'
+  gem 'guard-rspec'
+end
+
 group :test do
   gem 'cucumber-rails'
 end
