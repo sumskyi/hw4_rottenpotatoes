@@ -23,6 +23,7 @@ end
 group :development do
   gem 'guard-cucumber'
   gem 'guard-rspec'
+  gem 'rb-inotify', '~> 0.8.8'
 end
 
 group :test do
