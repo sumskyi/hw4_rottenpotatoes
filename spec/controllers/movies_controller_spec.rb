@@ -79,11 +79,37 @@ describe MoviesController do
     end
   end
 
-  describe 'index' do
-    it 'ok' do
-      m = mock(Movie, :id => "10", :title => "blah", :director => nil)
-      Movie.stub!(:find).with("10").and_return(m)
-      get :index, :sort => 'title', :ratings => {:a => :a}
+
+  describe 'Show movies list' do
+    it 'should sort movies by title and show R rated ones' do
+      session[:sort] = "title"
+      session[:ratings] = { "R" => "1"}
+      get :index, :sort => session[:sort], :ratings => session[:ratings]
+    end
+    it 'should show R rated movies and sort them by date' do
+      session[:sort] = "release_date"
+      session[:ratings] = {"R" => "1"}
+      get :index, :sort => session[:sort], :ratings => session[:ratings]
+    end
+    it 'has no ratings parameters' do
+      session[:sort] = "release_date"
+      session[:ratings] = {"R" => "1"}
+      get :index, :sort => session[:sort]
+      response.should redirect_to(movies_path(:sort => session[:sort], :ratings => session[:ratings]))
+     end
+     it 'has no sort params' do
+       session[:sort] = "release_date"
+       session[:ratings] = {"R" => "1"}
+       get :index, :ratings => session[:ratings]
+       response.should redirect_to(movies_path(:sort => session[:sort], :ratings => session[:ratings]))
+     end
+  end
+
+  describe 'Edit should be tested too ;)' do
+    it 'should be tested' do
+      m = mock(Movie, :id => "1", :title => "blah", :director => nil)
+      Movie.stub!(:find).with("1").and_return(m)
+      get :edit, :id => 1
     end
   end
 end
