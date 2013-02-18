@@ -70,4 +70,20 @@ describe MoviesController do
       delete :destroy, {:id => "10"}
     end
   end
+
+  describe 'show' do
+    it 'ok' do
+      m = mock(Movie, :id => "10", :title => "blah", :director => nil)
+      Movie.stub!(:find).with("10").and_return(m)
+      get :show, :id => "10"
+    end
+  end
+
+  describe 'index' do
+    it 'ok' do
+      m = mock(Movie, :id => "10", :title => "blah", :director => nil)
+      Movie.stub!(:find).with("10").and_return(m)
+      get :index, :sort => 'title', :ratings => {:a => :a}
+    end
+  end
 end
